@@ -68,4 +68,74 @@ class VeiaTheGame {
 
         localStorage.setItem('players', JSON.stringify(this.listaPlayers));
     }
+
+    handleSquareClick(event) {
+        if (this.gameOver) {
+            this.squares.forEach(square => square.classList.remove('cursor-pointer'));
+            this.squares.forEach(square => square.classList.add('cursor-not-allowed'));
+            return;
+        }
+
+        const square = event.target;
+        const index = square.getAttribute('data-index');
+
+        if (this.board[index] !== null) {
+            return;
+        }
+
+        this.board[index] = this.currentPlayer;
+        square.textContent = this.currentPlayer;
+
+        const img = document.createElement('img');
+        img.src = this.currentPlayer === 'X' ? 'assets/x-selected.png' : 'assets/o-selected.png';
+        img.classList.add('scale-0', 'transition-transform', 'duration-300', 'ease-in-out');
+        square.innerHTML = '';
+        square.appendChild(img);
+
+        setTimeout(() => {
+            img.classList.remove('scale-0');
+        }, 0);
+
+        const winningPattern = this.checkWin();
+
+        if (winningPattern) {
+            this.gameOver = true;
+            winningPattern.forEach(index => {
+                this.squares[index].classList.remove('bg-[#22353f]');
+
+                const winColor = this.currentPlayer === 'X' ? 'bg-[#5bc8bc]' : 'bg-[#e6b650]';
+                this.squares[index].classList.add(winColor);
+
+                const img = this.squares[index].querySelector('img');
+                img.src = this.currentPlayer === 'X' ? 'assets/x-win.png' : 'assets/o-win.png';
+            });
+
+            if (this.currentPlayer === 'X') {
+                this.playerXDialog.showModal();
+                this.backdrop.classList.add('block');
+                this.objPlayerX.vitorias += 1;
+                this.objPlayerO.derrotas += 1;
+                this.xWins++;
+                document.getElementById('x-wins').innerHTML = `<span class="text-gray-700">PLAYER X</span> <br>${this.xWins}`;
+                localStorage.setItem('players', JSON.stringify(this.listaPlayers));
+            } else if (this.currentPlayer === 'O') {
+                this.playerODialog.showModal();
+                this.backdrop.classList.add('block');
+                this.objPlayerO.vitorias += 1;
+                this.objPlayerX.derrotas += 1;
+                this.oWins++;
+                document.getElementById('o-wins').innerHTML = `<span class="text-gray-700">PLAYER O</span> <br>${this.oWins}`;
+                localStorage.setItem('players', JSON.stringify(this.listaPlayers));
+            }
+        } else if (this.board.every(cell => cell !== null)) {
+            this.gameOver = true;
+            this.empateDialog.showModal();
+            this.backdrop.classList.add('block');
+            this.empates++;
+            document.getElementById('empates').innerHTML = `<span class="text-gray-700">EMPATES</span> <br>${this.empates}`;
+        } else {
+            this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+            this.turnos.innerHTML = `VEZ DE <span class="text-${this.currentPlayer === 'X' ? '[#5bc8bc]' : '[#e6b650]'}">${this.currentPlayer}</span>`;
+        }
+    }
 }
