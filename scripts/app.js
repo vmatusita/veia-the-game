@@ -138,4 +138,60 @@ class VeiaTheGame {
             this.turnos.innerHTML = `VEZ DE <span class="text-${this.currentPlayer === 'X' ? '[#5bc8bc]' : '[#e6b650]'}">${this.currentPlayer}</span>`;
         }
     }
+
+    checkWin() {
+        const winPatterns = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        for (const pattern of winPatterns) {
+            const [a, b, c] = pattern;
+            if (this.board[a] && this.board[a] === this.board[b] && this.board[a] === this.board[c]) {
+                return pattern;
+            }
+        }
+        return false;
+    }
+
+    resetGame() {
+        this.board = Array(9).fill(null);
+        this.squares.forEach(square => {
+            square.innerHTML = '';
+            square.classList.remove('bg-[#5bc8bc]', 'bg-[#e6b650]');
+            square.classList.add('bg-[#22353f]');
+            square.classList.remove('cursor-not-allowed');
+            square.classList.add('cursor-pointer');
+        });
+        this.currentPlayer = 'X';
+        this.gameOver = false;
+        this.backdrop.classList.remove('block');
+        this.playerXDialog.close();
+        this.playerODialog.close();
+        this.empateDialog.close();
+        this.turnos.innerHTML = 'VEZ DE <span class="text-[#5bc8bc]">X</span>';
+    }
+
+    closeDialog() {
+        this.backdrop.classList.remove('block');
+        this.playerXDialog.close();
+        this.playerODialog.close();
+        this.empateDialog.close();
+    }
+
+    recarregarPlayers() {
+        const playersLocalStorage = localStorage.getItem('players');
+
+        if (playersLocalStorage) {
+            this.listaPlayers = JSON.parse(playersLocalStorage);
+        }
+    }
 }
+
+const veiaTheGame = new VeiaTheGame();
