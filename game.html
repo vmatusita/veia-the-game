@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="icon" href="assets/jogadavelha.png">
+    <title>Veia The Game</title>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-[#1b2a32] font-poetsen md:scale-125 md:overflow-x-hidden select-none mt-5">
+    <a href="index.html"><h1 class="text-4xl mb-10 text-center"><span class="text-[#5bc8bc]">VEIA</span> <span class="text-[#abbec8]">THE</span> <span class="text-[#e6b650]">GAME</span></h1></a>
+    <section class="flex items-center justify-center m-5" id="formLogar">
+        <form class="space-y-6 mb-20">
+            <p class="flex flex-col gap-2">
+                <label class="text-xl text-[#abbec8]" for="nick-x">PLAYER <span class="text-[#5bc8bc]">X</span></label>
+                <input class="py-2.5 px-4 border-2 rounded-lg" type="text" id="nick-x" placeholder="Insira seu Nick">
+            </p>
+            <p class="flex flex-col gap-2">
+                <label class="text-xl text-[#abbec8]" for="nick-o">PLAYER <span class="text-[#e6b650]">O</span></label>
+                <input class="py-2.5 px-4 border-2 rounded-lg" type="text" id="nick-o" placeholder="Insira seu Nick">
+            </p>
+            <button type="submit" id="btnLogar" class="bg-[#abbec8] text-2xl w-80 py-1.5 rounded-md border border-[#abbec8] hover:bg-[#22353f] hover:text-[#abbec8] transition-colors duration-150 ease-in-out drop-shadow-2xl mt-6">INICIAR</button>
+        </form>
+    </section>
+    <main class="hidden" id="divMain">
+        <div class="flex items-center mb-2">   
+            <div class="flex space-x-1">
+                <img class="size-7" src="assets/x-selected.png" alt="x-selected">
+                <img class="size-7" src="assets/o-selected.png" alt="O">
+            </div>
+            <p class="mr-20 ml-14 text-lg bg-[#22353f] py-1 px-3 rounded-md text-[#abbec8] justify-center" id="turnos">VEZ DE <span class="text-[#5bc8bc]">X</span></p>
+            <span class="reset-game text-4xl cursor-pointer text-[#abbec8] transition-transform duration-1000 hover:rotate-90">
+                <ion-icon id="icon-reload" name="reload-circle-sharp"></ion-icon>
+            </span>
+        </div>     
+        <div id="game" class="grid grid-cols-3 gap-3">
+            <div class="square bg-[#22353f] cursor-pointer hover:scale-105" data-index="0"></div>
+            <div class="square bg-[#22353f] cursor-pointer hover:scale-105" data-index="1"></div>
+            <div class="square bg-[#22353f] cursor-pointer hover:scale-105" data-index="2"></div>
+            <div class="square bg-[#22353f] cursor-pointer hover:scale-105" data-index="3"></div>
+            <div class="square bg-[#22353f] cursor-pointer hover:scale-105" data-index="4"></div>
+            <div class="square bg-[#22353f] cursor-pointer hover:scale-105" data-index="5"></div>
+            <div class="square bg-[#22353f] cursor-pointer hover:scale-105" data-index="6"></div>
+            <div class="square bg-[#22353f] cursor-pointer hover:scale-105" data-index="7"></div>
+            <div class="square bg-[#22353f] cursor-pointer hover:scale-105" data-index="8"></div>
+        </div>
+        <div class="hidden fixed inset-0 backdrop-brightness-50 z-10" id="backdrop"></div>
+        <dialog id="dialog-x">
+            <div class="dialogo">
+                <div class="flex items-center gap-x-5">
+                    <img src="assets/x-selected.png" alt="x-selected" class="size-12">
+                    <p class="text-2xl tracking-wider text-[#5bc8bc]">VENCEU A RODADA!</p>
+                </div>
+                <div class="space-x-4">
+                    <button class="botao-sair bg-[#abbec8] botao">SAIR</button>
+                    <button class="reset-game bg-[#e6b650] botao">PRÓXIMA RODADA</button>
+                </div>
+            </div>    
+        </dialog>
+        <dialog id="dialog-o">
+            <div class="dialogo">
+                <div class="flex items-center gap-x-5">
+                    <img src="assets/o-selected.png" alt="x-selected" class="size-12">
+                    <p class="text-2xl tracking-wider text-[#e6b650]">VENCEU A RODADA!</p>
+                </div>
+                <div class="space-x-4">
+                    <button class="botao-sair bg-[#abbec8] botao">SAIR</button>
+                    <button class="reset-game bg-[#5bc8bc] botao">PRÓXIMA RODADA</button>
+                </div>
+            </div>    
+        </dialog>
+        <dialog id="dialog-empate">
+            <div class="dialogo">
+                <div class="flex items-center gap-x-5">
+                    <img src="assets/x-selected.png" alt="x-selected" class="size-12">
+                    <p class="text-2xl tracking-wider text-[#abbec8]">EMPATE!</p>
+                    <img src="assets/o-selected.png" alt="x-selected" class="size-12">
+                </div>
+                <div class="space-x-4">
+                    <button class="botao-sair bg-[#e6b650] botao">SAIR</button>
+                    <button class="reset-game bg-[#5bc8bc] botao">PRÓXIMA RODADA</button>
+                </div>
+            </div>    
+        </dialog>
+        <div class="flex space-x-4">
+            <p class="contagem bg-[#5bc8bc]" id="x-wins"><span class="text-gray-700">PLAYER X</span><br>0</p>
+            <p class="contagem bg-[#abbec8]" id="empates"><span class="text-gray-700">EMPATE</span><br>0</p>
+            <p class="contagem bg-[#e6b650]" id="o-wins"><span class="text-gray-700">PLAYER O</span><br>0</p> 
+        </div>
+    </main>
+
+    <script src="scripts/app.js"></script>
+</body>
+</html>
