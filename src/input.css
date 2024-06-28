@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+
+.square {
+    @apply flex items-center justify-center rounded-lg shadow-md h-24 w-24 text-3xl font-bold p-5 transition-transform duration-150 ease-in-out;
+}
+
+.transition {
+    @apply transition-transform duration-300 ease-in-out;
+}
+
+.vitoria {
+    @apply hidden text-xl text-white text-center mb-2 mt-5;
+}
+
+.contagem {
+    @apply text-sm text-center mt-12 py-1 px-5 rounded-md;
+}
+
+.botao {
+    @apply px-3 py-1.5 rounded-md text-sm text-[#1b2a32] duration-100 ease-in hover:transition-transform hover:scale-105;
+}
+
+.dialogo {
+    @apply fixed inset-0 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-[#22353f] w-full h-40 flex flex-col items-center justify-center space-y-4 md:scale-125 select-none;
+}
+
+.linha-tabela {
+    @apply py-2 px-4 border-b border-[#1b2a32] text-center;
+}
